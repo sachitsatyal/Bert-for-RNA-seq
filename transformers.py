@@ -1,4 +1,4 @@
-
+f
 
 import torch
 import torch.nn as nn
@@ -42,7 +42,7 @@ class SelfAttention(nn.Module):
         energy = torch.einsum("nqhd,nkhd->nhqk", [queries, keys])
         # queries shape: (N, query_len, heads, heads_dim),
         # keys shape: (N, key_len, heads, heads_dim)
-        # energy: (N, heads, query_len, key_len)
+        # energy: (N, heads, query_len, key_len) for each word in target how much do we put attention to each word on input.
 
         # Mask padded indices so their weights become 0
         if mask is not None:
