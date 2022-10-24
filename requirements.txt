@@ -1,0 +1,11 @@
+pandas
+pyarrow
+numpy
+scipy
+typing
+transformers
+huggingface_hub
+pytorch
+torchtext
+pytorch-lightning
+torchmetrics
