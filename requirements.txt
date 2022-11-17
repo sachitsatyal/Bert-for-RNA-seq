@@ -9,3 +9,4 @@ pytorch
 torchtext
 pytorch-lightning
 torchmetrics
+plotly
