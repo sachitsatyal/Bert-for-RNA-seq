@@ -10,3 +10,4 @@ torchtext
 pytorch-lightning
 torchmetrics
 plotly
+rdatkit
