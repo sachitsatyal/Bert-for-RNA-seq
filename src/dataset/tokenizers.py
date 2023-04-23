@@ -56,10 +56,10 @@ class RNASeqDataset(Dataset):
 
 
 """
-data = RNASeqDataset('rna_sequences.rdat', 'rdat', 'Rostlab/prot_bert_bfd')
+The model to use is Rostlab/pro_bert_bfd
+data = RNASeqDataset('/data/rmdb/ADD125_STD_0001.rdat', 'rdat', 'Rostlab/prot_bert_bfd')
 loader = data.get_loader(batch_size=32, shuffle=True)
 
 for input_ids, attn_mask in loader:
-    # do something with the input IDs and attention mask
-    print(f'Input IDs: {input_ids}')
-    print(f'Attention Mask: {attn_mask}')"""
+Feed them to transformers model
+    """
