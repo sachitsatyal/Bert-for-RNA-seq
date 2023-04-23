@@ -1,3 +1,4 @@
+import logging
 import torch
 from transformers import AutoTokenizer
 from torch.utils.data import Dataset, DataLoader
@@ -5,19 +6,40 @@ import pandas as pd
 import pickle
 from rdatkit import io
 
+logging.basicConfig(level=logging.INFO)
+
 class RNASeqDataset(Dataset):
+    """
+    A custom dataset for RNA sequences.
+    """
     def __init__(self, data_file, file_type, model_name):
-        if file_type == 'rdat':
-            rdat_file = io.RDATFile(data_file)
+        """
+        Initializes the dataset.
+        :param data_file: The file containing the RNA sequences.
+        :param file_type: The type of file (rdat, parquet, pickle).
+        :param model_name: The name of the model to use for tokenization.
+        """
+        self.data_file = data_file
+        self.file_type = file_type
+        self.model_name = model_name
+        self._load_data()
+        self.tokenizer = AutoTokenizer.from_pretrained(model_name)
+
+    def _load_data(self):
+        """
+        Loads the data from the file.
+        """
+        if self.file_type == 'rdat':
+            rdat_file = io.RDATFile(self.data_file)
             self.seqs = [r.seq for r in rdat_file.sequences]
-        elif file_type == 'parquet':
-            self.seqs = pd.read_parquet(data_file)
-        elif file_type == 'pickle':
-            with open(data_file, 'rb') as f:
+        elif self.file_type == 'parquet':
+            self.seqs = pd.read_parquet(self.data_file)
+        elif self.file_type == 'pickle':
+            with open(self.data_file, 'rb') as f:
                 self.seqs = pickle.load(f)
         else:
-            raise ValueError('Unsupported file type:', file_type)
-        self.tokenizer = AutoTokenizer.from_pretrained(model_name)
+            logging.error('Unsupported file type: %s', self.file_type)
+            raise ValueError('Unsupported file type:', self.file_type)
 
     def __len__(self):
         return len(self.seqs)
