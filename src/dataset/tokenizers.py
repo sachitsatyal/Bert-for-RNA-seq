@@ -2,6 +2,11 @@ import numpy as np
 import pandas as pd
 import torch
 from typing import List
+from torch.utils.data import Dataset, DataLoader
+from typing import List
+import rdatkit
+from transformers import AutoTokenizer
+from torch.utils.data import Subset
 
 class RNATokenizer:
     """
@@ -112,12 +117,6 @@ class RNATokenizer:
         return {"input_ids": input_ids, "attention_mask": attention_mask}
 
 
-import numpy as np
-import pandas as pd
-import torch
-from torch.utils.data import Dataset, DataLoader
-from typing import List
-import rdatkit
 
 class RNADataset(Dataset):
     """
@@ -260,10 +259,7 @@ class RNALoader(DataLoader):
 
 
 
-import torch
-import numpy as np
-from transformers import AutoTokenizer
-from torch.utils.data import Subset
+
 
 
 def train(model, train_loader, optimizer, criterion):
@@ -309,7 +305,7 @@ def evaluate(model, val_loader, criterion):
             running_loss += loss.item()
             
     return running_loss/len(val_loader)
-
+"""
 if __name__ == "__main__":
     # Set random seed
     np.random.seed(42)
@@ -393,12 +389,12 @@ if __name__ == "__main__":
     for batch in test_loader:
         print(batch)
     
-"""
-    model = torch.nn.Linear(768, 1).to(device) # Replace with your own model
+
+    model = None # Replace with your own model
     
     # Set optimization parameters
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-4)
-    criterion = torch.nn.BCEWithLogitsLoss()
+    criterion = None
     
     # Train the model
     num_epochs = 10
@@ -410,3 +406,4 @@ if __name__ == "__main__":
     # Evaluate the model on the test set
     test_loss = evaluate(model, test_loader, criterion)
     print(f"Test loss: {test_loss:.4f}")"""
+"""
